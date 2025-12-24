@@ -1,0 +1,114 @@
+{
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": ["power-profiles-daemon", "network", "bluetooth", "pulseaudio", "hyprland/language", "temperature", "backlight", "battery", "tray", "custom/power"],
+
+    "temperature": {
+        "format": "  {temperatureC}°C "
+    },
+
+    "backlight": {
+        "format": " {icon} {percent}% ",
+        "format-icons": [""]
+    },
+
+    "battery": {
+        // "bat": "BAT2",
+        "interval": 5,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "events": {
+            //"on-discharging-warning": "notify-send -u normal 'Low Battery'",
+            //"on-discharging-critical": "notify-send -u critical 'Very Low Battery'",
+            //"on-charging-100": "notify-send -u normal 'Battery Full!'"
+        },
+        "format": "{icon} {capacity}%",
+        "format-icons": ["", "", "", "", ""],
+        "max-length": 25
+    },
+
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "default": "",
+            "performance": "",
+            "balanced": "",
+            "power-saver": ""
+        }
+    },
+
+    "bluetooth": {
+        "format": "  ",
+        "format-off": "  Off ",
+        "format-on": "  On ",
+        "format-connected": "  {num_connections} ",
+        "tooltip": true,
+        "tooltip-format": "Bluetooth settings",
+        "on-click": "vicinae vicinae://extensions/Gelei/bluetooth/devices"
+    },
+
+    "hyprland/language": {
+        "format": "{}",
+        "format-en": "🇺🇸",
+        "format-ru": "🇷🇺",
+        "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next"
+    },
+
+    "network": {
+        // "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-wifi": "  {essid} ",
+        "format-ethernet": "{ifname} ",
+        "format-disconnected": "  ",
+        "max-length": 50,
+        "on-click": "vicinae vicinae://extensions/dagimg-dot/wifi-commander/scan-wifi"
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+
+    "tray": {
+        "icon-size": 15,
+        "spacing": 10
+    },
+
+    "clock": {
+        // "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        // "format-alt": "{:%Y-%m-%d}"
+        "format": "{:%H:%M:%S | %b %d, %Y (%a)}",
+        "interval": 1
+        // "on-click": "gnome-calendar"
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{icon} {volume}%  {format_source}",
+        "format-bluetooth-muted": "{icon}   {format_source}",
+        "format-muted": "{icon} 0%",
+        "format-source": "{volume}% ",
+        "format-source-muted": "  ",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "vicinae vicinae://extensions/rastsislaux/pulseaudio/pulseaudio"
+    },
+
+    "custom/power": {
+        "format": "  ",
+        "on-click": "wlogout"
+    }
+}
