@@ -1,2 +1,1 @@
-sudo pacman -S noto-fonts
-
+sudo pacman -S noto-fonts otf-font-awesome
