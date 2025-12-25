@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "description": "Hyprland plugins",
+    "commands": [
+        { "kind": "package", "name": "cpio" },
+        { "kind": "package", "name": "cmake" },
+        { "kind": "package", "name": "git" },
+        { "kind": "package", "name": "meson" },
+        { "kind": "package", "name": "gcc" },
+        { "kind": "shell", "script": [
+            "if hyprpm list | grep -q '\\bhyprexpo\\b'; then",
+            "  echo 'hyprexpo already present; skipping.'",
+            "  exit 0",
+            "fi",
+            "hyprpm update",
+            "hyprpm add https://github.com/hyprwm/hyprland-plugins",
+            "hyprpm enable hyprexpo"
+        ] }
+    ]
+}
