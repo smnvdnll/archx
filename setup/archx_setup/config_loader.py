@@ -4,6 +4,7 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+from json import JSONDecodeError
 
 
 @dataclass(frozen=True)
@@ -31,7 +32,13 @@ def _normalize_top_level(obj: Any) -> tuple[int | None, str | None, list[dict[st
 
 
 def load_config_file(path: Path) -> LoadedConfig:
-    raw = json.loads(path.read_text(encoding="utf-8"))
+    try:
+        text = path.read_text(encoding="utf-8")
+        raw = json.loads(text)
+    except JSONDecodeError as e:
+        raise ValueError(
+            f"Invalid JSON in {path} at line {e.lineno}, column {e.colno}: {e.msg}"
+        ) from e
     version, description, cmds = _normalize_top_level(raw)
     normalized: list[dict[str, Any]] = []
     for item in cmds:

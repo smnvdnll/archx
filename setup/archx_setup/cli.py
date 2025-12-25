@@ -87,7 +87,11 @@ def main(argv: list[str] | None = None) -> int:
     factory = CommandFactory()
     for path in files:
         rel = path.relative_to(config_dir)
-        loaded = load_config_file(path)
+        try:
+            loaded = load_config_file(path)
+        except Exception as e:
+            logger.error("Failed to load config @ %s: %s", rel.as_posix(), e)
+            return 2
         desc = loaded.description or rel.as_posix()
         ver = loaded.version if loaded.version is not None else "?"
         logger.info("==> %s v%s @ %s", desc, ver, rel.as_posix())

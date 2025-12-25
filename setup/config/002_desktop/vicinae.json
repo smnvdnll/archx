@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "description": "Vicinae (runner)",
+  "commands": [
+    { "kind": "package", "backend": "yay", "name": "vicinae-bin" },
+    { "kind": "symlink", "source": "config/vicinae", "target": "~/.config/vicinae" }
+  ]
+}

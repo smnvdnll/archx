@@ -5,7 +5,7 @@ import shlex
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable, Sequence
+from typing import Iterable, Mapping, Sequence
 
 
 def xdg_config_home() -> Path:
@@ -47,6 +47,10 @@ class CommandRunner:
         self._dry_run = dry_run
         self._logger = logger
 
+    @property
+    def dry_run(self) -> bool:
+        return self._dry_run
+
     def run(
         self,
         args: Iterable[str],
@@ -54,6 +58,8 @@ class CommandRunner:
         sudo: bool = False,
         check: bool = False,
         capture: bool = True,
+        cwd: Path | None = None,
+        env: Mapping[str, str] | None = None,
     ) -> RunResult:
         argv = list(args)
         if sudo:
@@ -65,11 +71,18 @@ class CommandRunner:
         if self._dry_run:
             return RunResult(args=argv, returncode=0, stdout="", stderr="")
 
+        merged_env = None
+        if env is not None:
+            merged_env = dict(os.environ)
+            merged_env.update(dict(env))
+
         cp = subprocess.run(
             argv,
             text=True,
             capture_output=capture,
             check=False,  # we handle below to include logs
+            cwd=str(cwd) if cwd is not None else None,
+            env=merged_env,
         )
         if check and cp.returncode != 0:
             raise RuntimeError(

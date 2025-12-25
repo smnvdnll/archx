@@ -6,10 +6,12 @@ from pathlib import Path
 from typing import Any, Protocol
 
 from archx_setup.backends.pacman import PacmanBackend
+from archx_setup.backends.shell_bash import BashShellBackend
 from archx_setup.backends.symlink_ln import LnSymlinkBackend, SymlinkConflictPolicy
 from archx_setup.backends.systemctl import SystemctlBackend
+from archx_setup.backends.yay import YayBackend
 from archx_setup.decisions import DecisionStore
-from archx_setup.util import CommandRunner, repo_root_from_setup_dir
+from archx_setup.util import CommandRunner, expand_path, repo_root_from_setup_dir
 
 
 class Command(Protocol):
@@ -36,8 +38,10 @@ class Context:
 @dataclass(frozen=True)
 class Backends:
     pacman: PacmanBackend
+    yay: YayBackend
     systemctl: SystemctlBackend
     symlink: LnSymlinkBackend
+    shell: BashShellBackend
 
 
 class PackageCommand:
@@ -46,12 +50,17 @@ class PackageCommand:
         self.backend = backend
 
     def apply(self, ctx: Context) -> str:
-        if self.backend != "pacman":
+        if self.backend == "pacman":
+            backend = ctx.backends.pacman
+        elif self.backend == "yay":
+            backend = ctx.backends.yay
+        else:
             raise ValueError(f"Unknown package backend: {self.backend}")
-        if ctx.backends.pacman.is_installed(self.name):
+
+        if backend.is_installed(self.name):
             pretty = self.name[:1].upper() + self.name[1:]
             return f"{pretty} package is already installed."
-        ctx.backends.pacman.install(self.name)
+        backend.install(self.name)
         pretty = self.name[:1].upper() + self.name[1:]
         return f"Installed {pretty} package."
 
@@ -91,6 +100,36 @@ class SymlinkCommand:
         return ctx.backends.symlink.ensure_symlink(source=src, target=self.target)
 
 
+class ShellCommand:
+    def __init__(
+        self,
+        script: list[str],
+        *,
+        cwd: str | None = None,
+        sudo: bool = False,
+        backend: str = "bash",
+    ) -> None:
+        self.script = script
+        self.cwd = cwd
+        self.sudo = sudo
+        self.backend = backend
+
+    def apply(self, ctx: Context) -> str:
+        if self.backend != "bash":
+            raise ValueError(f"Unknown shell backend: {self.backend}")
+
+        # Reasonable default: run scripts from user's HOME (avoids cloning into repo).
+        cwd_path = Path.home()
+        if self.cwd is not None:
+            cwd_path = expand_path(self.cwd)
+
+        if ctx.options.dry_run:
+            return f"Would run shell script ({len(self.script)} lines)."
+
+        ctx.backends.shell.run_script(self.script, cwd=cwd_path, sudo=self.sudo)
+        return f"Ran shell script ({len(self.script)} lines)."
+
+
 class CommandFactory:
     def from_dict(self, raw: dict[str, Any]) -> Command:
         kind = raw.get("kind") or raw.get("command")
@@ -121,6 +160,30 @@ class CommandFactory:
                 raise ValueError("symlink command requires 'source' and 'target'")
             return SymlinkCommand(source, target, backend=backend or "ln")
 
+        if kind == "shell":
+            script = raw.get("script")
+            if isinstance(script, str):
+                lines = [script]
+            elif isinstance(script, list) and all(isinstance(x, str) for x in script):
+                lines = list(script)
+            else:
+                raise ValueError("shell command requires 'script' (string or list of strings)")
+
+            cwd = raw.get("cwd")
+            if cwd is not None and not isinstance(cwd, str):
+                raise ValueError("'cwd' must be a string if present")
+
+            sudo = raw.get("sudo", False)
+            if not isinstance(sudo, bool):
+                raise ValueError("'sudo' must be a boolean if present")
+
+            return ShellCommand(
+                lines,
+                cwd=cwd,
+                sudo=sudo,
+                backend=backend or "bash",
+            )
+
         raise ValueError(f"Unknown command kind: {kind}")
 
 
@@ -136,6 +199,7 @@ def build_context(
     decisions = DecisionStore(decisions_path, logger)
 
     pacman = PacmanBackend(runner=runner, logger=logger)
+    yay = YayBackend(runner=runner, logger=logger)
     systemctl = SystemctlBackend(runner=runner, logger=logger)
     symlink = LnSymlinkBackend(
         runner=runner,
@@ -144,6 +208,7 @@ def build_context(
         non_interactive=options.non_interactive,
         conflict_policy=SymlinkConflictPolicy(mode=options.symlink_conflict),
     )
+    shell = BashShellBackend(runner=runner, logger=logger)
 
     return Context(
         repo_root=repo_root,
@@ -151,7 +216,13 @@ def build_context(
         runner=runner,
         decisions=decisions,
         options=options,
-        backends=Backends(pacman=pacman, systemctl=systemctl, symlink=symlink),
+        backends=Backends(
+            pacman=pacman,
+            yay=yay,
+            systemctl=systemctl,
+            symlink=symlink,
+            shell=shell,
+        ),
     )
 
 
