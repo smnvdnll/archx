@@ -18,6 +18,10 @@
     ] },
 
     { "kind": "shell", "script": [
+        "if [ -e \"$HOME/.local/share/vicinae/extensions/dagimg-dot/wifi-commander\" ] && [ -e \"$HOME/.local/share/vicinae/extensions/bluetooth\" ]; then",
+        "  echo 'wifi-commander and bluetooth extensions already present; skipping build.'",
+        "  exit 0",
+        "fi",
         "git clone --depth 1 https://github.com/vicinaehq/extensions",
         "if [ ! -e \"$HOME/.local/share/vicinae/extensions/dagimg-dot/wifi-commander\" ]; then",
         "  cd extensions/extensions/wifi-commander",
