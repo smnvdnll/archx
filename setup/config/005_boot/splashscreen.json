@@ -4,6 +4,6 @@
     "commands": [
         { "kind": "package", "name": "plymouth" },
         { "kind": "symlink", "source": "config/mkinitcpio/000_plymouth.conf", "target": "/etc/mkinitcpio.conf.d/000_plymouth.conf" },
-        { "kind": "shell", "script": "mkinitcpio -P" }
+        { "kind": "shell", "script": "sudo mkinitcpio -P" }
     ]
 }
