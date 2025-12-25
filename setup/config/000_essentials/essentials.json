@@ -4,6 +4,7 @@
     "commands": [
         { "kind": "package", "name": "git" },
         { "kind": "package", "name": "base-devel" },
+        { "kind": "package", "name": "npm" },
         {
             "kind": "shell",
             "script": [
