@@ -107,11 +107,15 @@ class ShellCommand:
         *,
         cwd: str | None = None,
         sudo: bool = False,
+        stdout: bool = False,
+        stderr: bool = False,
         backend: str = "bash",
     ) -> None:
         self.script = script
         self.cwd = cwd
         self.sudo = sudo
+        self.stdout = stdout
+        self.stderr = stderr
         self.backend = backend
 
     def apply(self, ctx: Context) -> str:
@@ -126,7 +130,15 @@ class ShellCommand:
         if ctx.options.dry_run:
             return f"Would run shell script ({len(self.script)} lines)."
 
-        ctx.backends.shell.run_script(self.script, cwd=cwd_path, sudo=self.sudo)
+        # If either stream is requested, run with output attached to the user's terminal.
+        # (We currently treat stdout/stderr together: if either is true -> show both.)
+        show_output = bool(self.stdout or self.stderr)
+        ctx.backends.shell.run_script(
+            self.script,
+            cwd=cwd_path,
+            sudo=self.sudo,
+            show_output=show_output,
+        )
         return f"Ran shell script ({len(self.script)} lines)."
 
 
@@ -177,10 +189,20 @@ class CommandFactory:
             if not isinstance(sudo, bool):
                 raise ValueError("'sudo' must be a boolean if present")
 
+            stdout = raw.get("stdout", False)
+            if not isinstance(stdout, bool):
+                raise ValueError("'stdout' must be a boolean if present")
+
+            stderr = raw.get("stderr", False)
+            if not isinstance(stderr, bool):
+                raise ValueError("'stderr' must be a boolean if present")
+
             return ShellCommand(
                 lines,
                 cwd=cwd,
                 sudo=sudo,
+                stdout=stdout,
+                stderr=stderr,
                 backend=backend or "bash",
             )
 

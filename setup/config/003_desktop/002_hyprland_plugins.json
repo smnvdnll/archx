@@ -7,7 +7,7 @@
         { "kind": "package", "name": "git" },
         { "kind": "package", "name": "meson" },
         { "kind": "package", "name": "gcc" },
-        { "kind": "shell", "script": [
+        { "kind": "shell", "stdout": true, "stderr": true, "script": [
             "if hyprpm list | awk 'prev ~ /hyprexpo/ && $0 ~ /enabled:[[:space:]]*true/ { exit 0 } { prev=$0 } END { exit 1 }'; then",
             "  echo 'hyprexpo already installed and enabled; skipping.'",
             "  exit 0",

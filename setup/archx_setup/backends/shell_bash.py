@@ -20,6 +20,7 @@ class BashShellBackend:
         cwd: Path | None = None,
         sudo: bool = False,
         env: Mapping[str, str] | None = None,
+        show_output: bool = False,
     ) -> None:
         # Single bash session so stateful commands (e.g. `cd`) persist.
         script = "set -euo pipefail\n" + "\n".join(lines) + "\n"
@@ -27,13 +28,14 @@ class BashShellBackend:
             ["bash", "-lc", script],
             sudo=sudo,
             check=True,
-            capture=True,
+            capture=(not show_output),
             cwd=cwd,
             env=env,
         )
-        if res.stdout.strip():
-            self.logger.debug("shell stdout:\n%s", res.stdout.rstrip())
-        if res.stderr.strip():
-            self.logger.debug("shell stderr:\n%s", res.stderr.rstrip())
+        if not show_output:
+            if res.stdout.strip():
+                self.logger.debug("shell stdout:\n%s", res.stdout.rstrip())
+            if res.stderr.strip():
+                self.logger.debug("shell stderr:\n%s", res.stderr.rstrip())
 
 
