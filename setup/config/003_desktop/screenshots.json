@@ -2,6 +2,6 @@
     "version": 1,
     "description": "Screenshots",
     "commands": [
-        { "kind": "package", "backend": "yay", "name": "grimblast-bin" }
+        { "kind": "package", "backend": "yay", "name": "grimblast-git" }
     ]
 }
