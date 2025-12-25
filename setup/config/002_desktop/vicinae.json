@@ -19,12 +19,12 @@
 
     { "kind": "shell", "script": [
         "git clone --depth 1 https://github.com/vicinaehq/extensions",
-        "if ![ -e \"$HOME/.local/share/vicinae/extensions/dagimg-dot/wifi-commander\" ]; then",
+        "if [ ! -e \"$HOME/.local/share/vicinae/extensions/dagimg-dot/wifi-commander\" ]; then",
         "  cd extensions/extensions/wifi-commander",
         "  npm install && npm run build",
         "  cd ../../..",
         "fi",
-        "if ![ -e \"$HOME/.local/share/vicinae/extensions/bluetooth\" ]; then",
+        "if [ ! -e \"$HOME/.local/share/vicinae/extensions/bluetooth\" ]; then",
         "  cd extensions/extensions/bluetooth",
         "  npm install && npm run build",
         "  cd ../../..",
