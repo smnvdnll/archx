@@ -6,20 +6,11 @@
         { "kind": "package", "name": "cmake" },
         { "kind": "package", "name": "meson" },
         { "kind": "package", "name": "gcc" },
-        { "kind": "shell", "stdout": true, "stderr": true, "script": [
-            "LIST=\"$(hyprpm list)\"",
-            "if printf '%s\\n' \"$LIST\" | grep -q 'hyprexpo'; then",
-            "  if printf '%s\\n' \"$LIST\" | awk 'prev ~ /hyprexpo/ && $0 ~ /enabled:[[:space:]]*true/ { ok=1 } { prev=$0 } END { exit !ok }'; then",
-            "    echo 'hyprexpo already installed and enabled; skipping.'",
-            "    exit 0",
-            "  fi",
-            "  echo 'hyprexpo installed but not enabled; enabling.'",
-            "  hyprpm enable hyprexpo",
-            "  exit 0",
-            "fi",
-            "hyprpm update",
-            "echo y | hyprpm add https://github.com/hyprwm/hyprland-plugins",
-            "hyprpm enable hyprexpo"
-        ] }
+        {
+            "kind": "hyprpm",
+            "repo": "hyprland-plugins",
+            "repo_url": "https://github.com/hyprwm/hyprland-plugins",
+            "plugin": "hyprexpo"
+        }
     ]
 }
