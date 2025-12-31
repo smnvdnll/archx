@@ -2,5 +2,7 @@
 vt = 1
 
 [default_session]
-command = "tuigreet --user-menu --time --cmd Hyprland"
+# Use a sessions menu so we can offer multiple Hyprland launch modes.
+# Sessions are defined in /etc/greetd/sessions (this repo ships them under config/greetd/sessions).
+command = "tuigreet --user-menu --time --remember --remember-session --sessions /etc/greetd/sessions"
 user = "rastsislau"
