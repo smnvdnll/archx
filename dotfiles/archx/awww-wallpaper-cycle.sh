@@ -105,10 +105,6 @@ if ! pgrep -x awww-daemon >/dev/null 2>&1; then
   exit 1
 fi
 
-build_awww_args() {
-  :
-}
-
 list_wallpapers() {
   # Keep extension list conservative; awww supports many formats.
   # See docs link above for full list.
