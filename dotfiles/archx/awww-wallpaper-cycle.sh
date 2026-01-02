@@ -106,22 +106,7 @@ if ! pgrep -x awww-daemon >/dev/null 2>&1; then
 fi
 
 build_awww_args() {
-  local -a args
-  args=(awww img)
-  if [[ -n "$OUTPUTS" ]]; then
-    args+=(-o "$OUTPUTS")
-  fi
-  args+=("$1")
-  if [[ -n "$TRANSITION_TYPE" ]]; then
-    args+=(--transition-type "$TRANSITION_TYPE")
-  fi
-  if [[ -n "$TRANSITION_STEP" ]]; then
-    args+=(--transition-step "$TRANSITION_STEP")
-  fi
-  if [[ -n "$TRANSITION_FPS" ]]; then
-    args+=(--transition-fps "$TRANSITION_FPS")
-  fi
-  printf '%s\0' "${args[@]}"
+  :
 }
 
 list_wallpapers() {
@@ -150,9 +135,23 @@ cycle_once() {
   fi
 
   for f in "${arr[@]}"; do
-    # shellcheck disable=SC2207
-    IFS=$'\0' read -r -d '' -a args < <(build_awww_args "$f"; printf '\0')
     log "set wallpaper: $f"
+    args=(awww img)
+    if [[ -n "$OUTPUTS" ]]; then
+      args+=(-o "$OUTPUTS")
+    fi
+    args+=("$f")
+    if [[ -n "$TRANSITION_TYPE" ]]; then
+      args+=(--transition-type "$TRANSITION_TYPE")
+    fi
+    if [[ -n "$TRANSITION_STEP" ]]; then
+      args+=(--transition-step "$TRANSITION_STEP")
+    fi
+    if [[ -n "$TRANSITION_FPS" ]]; then
+      args+=(--transition-fps "$TRANSITION_FPS")
+    fi
+
+    log "run: ${args[*]}"
     if ! "${args[@]}" >&3 2>&3; then
       log "WARN: awww failed for: $f"
     fi
