@@ -65,7 +65,7 @@ Important notes:
 | Editor | `lite-xl` |
 | File manager | `yazi` |
 | Image viewer | `swayimg` |
-| Display manager | `greetd` + `greetd-tuigreet` |
+| Display manager | `greetd` + `greetd-regreet` |
 | Screenshots | `grimblast-git` (AUR via `yay`) |
 | AUR helper | `yay` |
 | App launcher | `vicinae-bin` (AUR via `yay`) |
@@ -94,7 +94,7 @@ The following packages are ensured to be installed by the configs under `archx/`
   - `gcc`
   - `git`
   - `greetd`
-  - `greetd-tuigreet`
+  - `greetd-regreet`
   - `hypridle`
   - `hyprland`
   - `hyprlock`

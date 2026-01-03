@@ -1,12 +1,12 @@
 # ========== Install Display Manager (greetd) ==========
 # Display Manager is responsible for displaying the desktop environment.
-# I use greetd + tuigreet for a minimal display manager.
+# I use greetd + regreet for a minimal display manager.
 
 version = 1
 description = "Display manager (greetd)"
 
 [[packages]]
-names = ["greetd", "greetd-tuigreet"]
+names = ["greetd", "greetd-regreet"]
 
 [[symlink]]
 source = "dotfiles/greetd"
@@ -14,5 +14,3 @@ target = "/etc/greetd"
 
 [[service]]
 name = "greetd.service"
-
-

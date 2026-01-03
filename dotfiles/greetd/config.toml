@@ -2,7 +2,11 @@
 vt = 1
 
 [default_session]
-# Use a sessions menu so we can offer multiple Hyprland launch modes.
-# Sessions are defined in /etc/greetd/sessions (this repo ships them under config/greetd/sessions).
-command = "tuigreet --user-menu --time --remember --remember-session --sessions /etc/greetd/sessions"
+# ReGreet needs a Wayland compositor; we run it under Hyprland.
+# Docs:
+# - https://raw.githubusercontent.com/rharish101/ReGreet/refs/heads/main/README.md
+#
+# Use /etc/greetd/sessions (symlinked from dotfiles/greetd/sessions) as the first session dir,
+# so we can override or add sessions easily.
+command = "env SESSION_DIRS=/etc/greetd/sessions:/usr/share/xsessions:/usr/share/wayland-sessions start-hyprland -- -c /etc/greetd/hyprland-regreet.conf"
 user = "rastsislau"

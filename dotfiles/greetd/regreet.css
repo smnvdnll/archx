@@ -1,0 +1,113 @@
+/* ReGreet custom CSS
+ *
+ * Goal: match the "liquid glass" look from:
+ * - dotfiles/waybar/style.css
+ * - dotfiles/swaync/style.css
+ */
+
+/* Base colors (same palette as swaync/waybar) */
+@define-color archx_bg rgba(20, 20, 30, 0.85);
+@define-color archx_border rgba(255, 255, 255, 0.08);
+@define-color archx_hover rgba(255, 255, 255, 0.08);
+@define-color archx_hover_strong rgba(255, 255, 255, 0.12);
+@define-color archx_text #e0e0e0;
+@define-color archx_text_strong #ffffff;
+
+* {
+  font-family: "Liberation Sans", "Inter", "Noto Sans", "DejaVu Sans", sans-serif;
+  color: @archx_text;
+}
+
+/* Make the greeter feel like a glass panel */
+window,
+application,
+box {
+  background: transparent;
+}
+
+/* Most GTK greeters use a central container; style any frame-like surfaces */
+frame,
+.card,
+.container,
+.content,
+.background,
+.main {
+  background: @archx_bg;
+  border: 1px solid @archx_border;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.30);
+}
+
+/* Inputs */
+entry,
+textview,
+combobox,
+spinbutton {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid @archx_border;
+  border-radius: 12px;
+  padding: 8px 10px;
+  color: @archx_text;
+}
+
+entry:focus,
+textview:focus,
+combobox:focus,
+spinbutton:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+/* Buttons */
+button {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid @archx_border;
+  border-radius: 12px;
+  padding: 8px 12px;
+  box-shadow: none;
+}
+
+button:hover {
+  background: @archx_hover;
+}
+
+button:active,
+button:checked {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+label {
+  color: @archx_text;
+}
+
+label.title,
+label.heading {
+  color: @archx_text_strong;
+  font-weight: 700;
+}
+
+/* Session/user dropdown menus */
+popover,
+menu {
+  background: @archx_bg;
+  border: 1px solid @archx_border;
+  border-radius: 16px;
+}
+
+popover > box,
+menu > box {
+  background: transparent;
+}
+
+modelbutton,
+menuitem {
+  border-radius: 12px;
+  padding: 8px 10px;
+}
+
+modelbutton:hover,
+menuitem:hover {
+  background: @archx_hover_strong;
+}
+
+
