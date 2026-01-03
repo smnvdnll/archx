@@ -8,18 +8,22 @@
  * - https://man.sr.ht/~kennylevinsen/greetd/ (see "Styling gtkgreet")
  */
 
-:root {
-  --archx-bg: rgba(20, 20, 30, 0.78);
-  --archx-border: rgba(255, 255, 255, 0.10);
-  --archx-hover: rgba(255, 255, 255, 0.08);
-  --archx-hover-strong: rgba(255, 255, 255, 0.12);
-  --archx-text: #e0e0e0;
-  --archx-text-strong: #ffffff;
-}
+/* Note: GTK3 uses a CSS *subset* (not full web CSS).
+ * In particular, avoid CSS custom properties (e.g. --foo / var(--foo)),
+ * and prefer explicit values. See: https://docs.gtk.org/gtk3/ (CSS overview).
+ */
+
+/* Palette (kept inline for GTK3 compatibility) */
+/* bg panel */      /* rgba(20, 20, 30, 0.78) */
+/* border */        /* rgba(255, 255, 255, 0.10) */
+/* hover */         /* rgba(255, 255, 255, 0.08) */
+/* hover-strong */  /* rgba(255, 255, 255, 0.12) */
+/* text */          /* #e0e0e0 */
+/* text-strong */   /* #ffffff */
 
 * {
   font-family: "Liberation Sans", "Inter", "Noto Sans", "DejaVu Sans", sans-serif;
-  color: var(--archx-text);
+  color: #e0e0e0;
 }
 
 window {
@@ -31,20 +35,20 @@ window {
 
 /* The central container in gtkgreet is typically box#body (per greetd docs). */
 box#body {
-  background: var(--archx-bg);
-  border: 1px solid var(--archx-border);
+  background-color: rgba(20, 20, 30, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 16px;
   padding: 28px;
   box-shadow: 0 6px 30px rgba(0, 0, 0, 0.35);
 }
 
 label {
-  color: var(--archx-text);
+  color: #e0e0e0;
 }
 
 label.title,
 label.heading {
-  color: var(--archx-text-strong);
+  color: #ffffff;
   font-weight: 700;
 }
 
@@ -53,7 +57,7 @@ entry,
 spinbutton,
 textview {
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--archx-border);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 12px;
   padding: 8px 10px;
 }
@@ -68,14 +72,14 @@ textview:focus {
 /* Buttons */
 button {
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid var(--archx-border);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 12px;
   padding: 8px 12px;
   box-shadow: none;
 }
 
 button:hover {
-  background: var(--archx-hover);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 button:active,
@@ -92,7 +96,7 @@ combobox {
 
 combobox button {
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--archx-border);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 12px;
   padding: 8px 10px;
   box-shadow: none;
@@ -106,7 +110,7 @@ combobox button:hover {
 popover,
 menu {
   background: rgba(20, 20, 30, 0.92);
-  border: 1px solid var(--archx-border);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 16px;
 }
 
@@ -127,5 +131,5 @@ menuitem {
 
 modelbutton:hover,
 menuitem:hover {
-  background: var(--archx-hover-strong);
+  background: rgba(255, 255, 255, 0.12);
 }
