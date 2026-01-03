@@ -18,8 +18,18 @@ def expand_path(s: str) -> Path:
 
 
 def repo_root_from_setup_dir(setup_dir: Path) -> Path:
-    # repo_root/setup/...
-    return setup_dir.parent
+    """
+    Resolve repo root from a directory inside the repo.
+
+    Historically archx_setup lived under repo_root/setup/archx_setup and we passed setup_dir=repo_root/setup.
+    It now lives under repo_root/archx_setup, so we pass setup_dir=repo_root.
+    """
+    setup_dir = setup_dir.resolve()
+    # If setup_dir is ".../setup", repo root is parent.
+    if setup_dir.name == "setup":
+        return setup_dir.parent
+    # Otherwise assume setup_dir is repo root.
+    return setup_dir
 
 
 def sh_join(args: Sequence[str]) -> str:

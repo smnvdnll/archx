@@ -2,33 +2,33 @@
 
 This directory contains a small, declarative setup runner for Arch Linux.
 
-- Config files live in `setup/config/` and are loaded **recursively**.
+- Config files live in `archx/` and are loaded **recursively**.
 - Supported formats: `*.json`, `*.toml`, `*.yaml`, `*.yml`.
   - JSON and TOML work out of the box.
   - YAML requires `PyYAML` (install: `python -m pip install pyyaml`).
 - Each config file contains a list of command objects (or `{ "version": 1, "commands": [...] }`).
 - The runner is **idempotent**: it checks current state before changing anything.
 
-Example configs in other formats live under `setup/config_examples/` (they are **not** executed by default).
+Example configs in other formats live under `archx_setup/config_examples/` (they are **not** executed by default).
 
 ## Quick start
 
 Run everything:
 
 ```bash
-./setup/archx
+./archx-install
 ```
 
 Dry-run (log what would happen):
 
 ```bash
-./setup/archx --dry-run
+./archx-install --dry-run
 ```
 
 Non-interactive (never prompt; default is to **skip** symlink conflicts):
 
 ```bash
-./setup/archx --non-interactive
+./archx-install --non-interactive
 ```
 
 ## Command kinds
@@ -37,10 +37,11 @@ Non-interactive (never prompt; default is to **skip** symlink conflicts):
 
 Ensures a package is installed.
 
-Example:
+Example (TOML-native):
 
-```json
-{ "kind": "package", "name": "greetd" }
+```toml
+[[package]]
+name = "greetd"
 ```
 
 Backends:
@@ -50,8 +51,10 @@ Backends:
 
 Example (AUR):
 
-```json
-{ "kind": "package", "backend": "yay", "name": "thorium-browser-bin" }
+```toml
+[[package]]
+backend = "yay"
+name = "thorium-browser-bin"
 ```
 
 ### symlink
@@ -60,8 +63,10 @@ Ensures a symlink exists (and points to the expected source).
 
 Example:
 
-```json
-{ "kind": "symlink", "source": "config/hypr", "target": "~/.config/hypr" }
+```toml
+[[symlink]]
+source = "dotfiles/hypr"
+target = "~/.config/hypr"
 ```
 
 If the target already exists and is not the desired symlink, the runner will ask what to do.
@@ -75,8 +80,9 @@ Ensures a systemd unit is enabled.
 
 Example:
 
-```json
-{ "kind": "service", "name": "greetd.service" }
+```toml
+[[service]]
+name = "greetd.service"
 ```
 
 ### shell
@@ -85,16 +91,14 @@ Runs a small bash script (single session, so `cd` works across lines).
 
 Example:
 
-```json
-{
-  "kind": "shell",
-  "stdout": true,
-  "stderr": true,
-  "script": [
-    "echo hello",
-    "pwd"
-  ]
-}
+```toml
+[[shell]]
+stdout = true
+stderr = true
+script = """
+echo hello
+pwd
+"""
 ```
 
 ## Backends / executors
@@ -114,8 +118,10 @@ Built-in executors:
 
 You can override via `backend` in a command object, e.g.:
 
-```json
-{ "kind": "package", "name": "git", "backend": "pacman" }
+```toml
+[[package]]
+backend = "pacman"
+name = "git"
 ```
 
 ## Command plugins (runtime-loaded)
@@ -138,7 +144,7 @@ Each plugin file must define either:
 For a stable plugin SDK (types + utilities like `CommandRunner`), use:
 - `archx_setup.plugin_api`
 
-See `setup/plugins/hyprpm.py` for an example plugin implementation.
+See `plugins/hyprpm.py` for an example plugin implementation.
 
 ## TOML config syntax (recommended)
 

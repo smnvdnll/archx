@@ -82,7 +82,9 @@ def main(argv: list[str] | None = None) -> int:
         symlink_conflict=("skip" if args.non_interactive and args.symlink_conflict == "ask" else args.symlink_conflict),
     )
 
-    setup_dir = Path(__file__).resolve().parents[1]  # .../setup
+    # archx_setup is now located at repo_root/archx_setup, so repo_root is parents[1].
+    # (Older layouts used repo_root/setup/archx_setup; util.repo_root_from_setup_dir supports both.)
+    setup_dir = Path(__file__).resolve().parents[1]
     ctx = build_context(
         setup_dir=setup_dir,
         decisions_path=decisions_path,

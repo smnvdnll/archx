@@ -2,8 +2,8 @@
 
 `archx` is my personal set of scripts/configs to set up a fresh Arch Linux system the way I like it.
 
-The setup is driven by **`archx-setup`**, a small declarative runner living in `setup/`.
-For details about how the runner works and how to extend it, see `setup/README.md`.
+The setup is driven by **`archx-setup`**, a small declarative runner living in `archx_setup/`.
+For details about how the runner works and how to extend it, see `archx_setup/README.md`.
 
 ## What is this “for”?
 
@@ -39,6 +39,12 @@ Dry-run:
   - keep changes idempotent (commands should be safe to re-run)
 - Keep actual dotfiles/config payloads in `dotfiles/` and reference them via `[[symlink]] source = "dotfiles/..."`.
 
+## Wallpapers (awww + rotation)
+
+Wallpapers are rotated using [`awww`](https://codeberg.org/LGFae/awww).
+
+- **Where wallpapers live (in repo)**: `dotfiles/archx/wallpaper/`
+
 ## What changes does `archx-setup` apply?
 
 Important notes:
@@ -64,6 +70,7 @@ Important notes:
 | AUR helper | `yay` |
 | App launcher | `vicinae-bin` (AUR via `yay`) |
 | Vicinae plugins/extensions | pulseaudio, wifi-commander, bluetooth |
+| Wallpaper daemon | `awww` |
 
 ### Build/tooling groups installed
 
@@ -91,7 +98,6 @@ The following packages are ensured to be installed by the configs under `archx/`
   - `hypridle`
   - `hyprland`
   - `hyprlock`
-  - `hyprpaper`
   - `jq`
   - `kitty`
   - `libnotify`
@@ -110,6 +116,7 @@ The following packages are ensured to be installed by the configs under `archx/`
   - `yazi`
 - **yay** (AUR):
   - `grimblast-git`
+  - `awww-git`
   - `vicinae-bin`
 
 ### Services enabled
@@ -129,5 +136,3 @@ These are ensured as symlinks (if the target path is free or you choose to repla
 - `~/.config/yazi` -> `dotfiles/yazi`
 - `/etc/greetd` -> `dotfiles/greetd`
 - `/etc/mkinitcpio.conf.d/000_plymouth.conf` -> `dotfiles/mkinitcpio/000_plymouth.conf`
-
- 
