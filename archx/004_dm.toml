@@ -12,5 +12,9 @@ names = ["greetd", "greetd-regreet"]
 source = "dotfiles/greetd"
 target = "/etc/greetd"
 
+[[symlink]]
+source = "dotfiles/archx/wallpaper"
+target = "/etc/greetd/wallpaper"
+
 [[service]]
 name = "greetd.service"

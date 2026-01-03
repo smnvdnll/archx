@@ -6,16 +6,18 @@
  */
 
 /* Base colors (same palette as swaync/waybar) */
-@define-color archx_bg rgba(20, 20, 30, 0.85);
-@define-color archx_border rgba(255, 255, 255, 0.08);
-@define-color archx_hover rgba(255, 255, 255, 0.08);
-@define-color archx_hover_strong rgba(255, 255, 255, 0.12);
-@define-color archx_text #e0e0e0;
-@define-color archx_text_strong #ffffff;
+:root {
+  --archx-bg: rgba(20, 20, 30, 0.85);
+  --archx-border: rgba(255, 255, 255, 0.08);
+  --archx-hover: rgba(255, 255, 255, 0.08);
+  --archx-hover-strong: rgba(255, 255, 255, 0.12);
+  --archx-text: #e0e0e0;
+  --archx-text-strong: #ffffff;
+}
 
 * {
   font-family: "Liberation Sans", "Inter", "Noto Sans", "DejaVu Sans", sans-serif;
-  color: @archx_text;
+  color: var(--archx-text);
 }
 
 /* Make the greeter feel like a glass panel */
@@ -32,8 +34,8 @@ frame,
 .content,
 .background,
 .main {
-  background: @archx_bg;
-  border: 1px solid @archx_border;
+  background: var(--archx-bg);
+  border: 1px solid var(--archx-border);
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.30);
 }
@@ -44,10 +46,10 @@ textview,
 combobox,
 spinbutton {
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid @archx_border;
+  border: 1px solid var(--archx-border);
   border-radius: 12px;
   padding: 8px 10px;
-  color: @archx_text;
+  color: var(--archx-text);
 }
 
 entry:focus,
@@ -61,14 +63,14 @@ spinbutton:focus {
 /* Buttons */
 button {
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid @archx_border;
+  border: 1px solid var(--archx-border);
   border-radius: 12px;
   padding: 8px 12px;
   box-shadow: none;
 }
 
 button:hover {
-  background: @archx_hover;
+  background: var(--archx-hover);
 }
 
 button:active,
@@ -77,26 +79,39 @@ button:checked {
 }
 
 label {
-  color: @archx_text;
+  color: var(--archx-text);
 }
 
 label.title,
 label.heading {
-  color: @archx_text_strong;
+  color: var(--archx-text-strong);
   font-weight: 700;
 }
 
 /* Session/user dropdown menus */
 popover,
 menu {
-  background: @archx_bg;
-  border: 1px solid @archx_border;
+  background: var(--archx-bg);
+  border: 1px solid var(--archx-border);
   border-radius: 16px;
 }
 
 popover > box,
 menu > box {
   background: transparent;
+}
+
+/* Avoid "double container" look inside dropdowns/popovers */
+popover frame,
+popover box,
+popover .card,
+popover .container,
+popover .content,
+popover .background,
+popover .main {
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 modelbutton,
@@ -107,7 +122,19 @@ menuitem {
 
 modelbutton:hover,
 menuitem:hover {
-  background: @archx_hover_strong;
+  background: var(--archx-hover-strong);
+}
+
+/* Clock widget: match Waybar look (transparent surface + padding) */
+#clock,
+label#clock,
+.clock,
+label.clock {
+  padding: 3px 12px;
+  margin: 1px 0px;
+  background: transparent;
+  color: var(--archx-text);
+  font-weight: 400;
 }
 
 

@@ -6,7 +6,7 @@
 
 [background]
 # You can replace this with your own file (e.g. under /etc/greetd/).
-path = "/usr/share/backgrounds/greeter.jpg"
+path = "/etc/greetd/wallpaper/zenitsu.jpg"
 fit = "Cover"
 
 # Environment variables passed to created sessions (optional).
@@ -16,7 +16,7 @@ fit = "Cover"
 application_prefer_dark_theme = true
 
 # Match the rest of the desktop (waybar/swaync use Liberation Sans / Inter-like stack).
-font_name = "Liberation Sans 16"
+font_name = "Liberation Sans 13"
 
 # Keep defaults unless you customize them system-wide.
 cursor_theme_name = "Adwaita"
@@ -27,9 +27,11 @@ theme_name = "Adwaita"
 greeting_msg = "Welcome"
 
 [widget.clock]
-format = "%a %H:%M"
-resolution = "500ms"
-label_width = 160
+# Match Waybar clock format from dotfiles/waybar/config.jsonc:
+# {:%H:%M:%S | %b %d, %Y (%a)}
+format = "%H:%M:%S | %b %d, %Y (%a)"
+resolution = "1s"
+label_width = 240
 
 [commands]
 reboot = ["systemctl", "reboot"]
