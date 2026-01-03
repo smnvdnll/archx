@@ -45,7 +45,7 @@ box#body {
 
 label {
   color: #e0e0e0;
-  margin: 4px 0px;
+  margin: 6px 0px;
 }
 
 label.title,
@@ -61,8 +61,8 @@ textview {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 8px;
-  padding: 4px 8px;
-  margin: 4px 0px;
+  padding: 2px 4px;
+  margin: 6px 0px;
 }
 
 entry:focus,
@@ -77,8 +77,8 @@ button {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 8px;
-  padding: 4px 10px;
-  margin: 4px 0px;
+  padding: 2px 5px;
+  margin: 6px 0px;
   box-shadow: none;
 }
 
@@ -102,8 +102,8 @@ combobox button {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 8px;
-  padding: 4px 8px;
-  margin: 4px 0px;
+  padding: 2px 4px;
+  margin: 6px 0px;
   box-shadow: none;
 }
 
@@ -131,8 +131,8 @@ menu box {
 modelbutton,
 menuitem {
   border-radius: 8px;
-  padding: 4px 8px;
-  margin: 2px 0px;
+  padding: 2px 4px;
+  margin: 3px 0px;
 }
 
 modelbutton:hover,
