@@ -13,14 +13,6 @@ source = "dotfiles/greetd"
 target = "/etc/greetd"
 
 [[symlink]]
-source = "dotfiles/greetd/bin/archx-hyprland"
-target = "/usr/local/bin/archx-hyprland"
-
-[[symlink]]
-source = "dotfiles/greetd/bin/archx-hyprland-logs"
-target = "/usr/local/bin/archx-hyprland-logs"
-
-[[symlink]]
 source = "dotfiles/archx/wallpaper"
 target = "/etc/archx/greeter/wallpaper"
 
