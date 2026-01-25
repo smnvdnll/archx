@@ -1,0 +1,13 @@
+# ======== Install other software ========
+
+version = 1
+description = "Other software"
+
+[[packages]]
+names = [
+  "power-profiles-daemon"
+]
+
+[[service]]
+name = "power-profiles-daemon"
+
