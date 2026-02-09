@@ -52,7 +52,7 @@
     // ===== modules-right =====
 
     "hyprland/language": {
-        "format": "",
+        "format": "{}",
         "format-en": "🇬🇧",
         "format-ru": "🇷🇺"
     },
