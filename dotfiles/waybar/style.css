@@ -66,6 +66,10 @@ window#waybar {
   margin: 0 1px;
 }
 
+#workspaces button.urgent {
+  background-color: @red;
+}
+
 #workspaces button.active {
   color: @sky;
   background-color: rgba(255, 255, 255, 0.06);
