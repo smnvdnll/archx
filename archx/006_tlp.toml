@@ -6,9 +6,12 @@ description = "tlp"
 [[packages]]
 names = [
   "tlp",
-  "tlp-ui",
   "tlp-pd"
 ]
+
+[[symlink]]
+source = "dotfiles/tlp/tlp.conf"
+target = "/etc/tlp.conf"
 
 [[service]]
 name = "tlp.service"
@@ -16,6 +19,3 @@ name = "tlp.service"
 [[service]]
 name = "tlp-pd.service"
 
-[[symlink]]
-source = "dotfiles/tlp/tlp.conf"
-target = "/etc/tlp.conf"
