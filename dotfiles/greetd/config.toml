@@ -1,0 +1,12 @@
+[terminal]
+vt = 1
+
+[default_session]
+# ReGreet needs a Wayland compositor; we run it under Hyprland.
+# Docs:
+# - https://raw.githubusercontent.com/rharish101/ReGreet/refs/heads/main/README.md
+#
+# Use /etc/greetd/sessions (symlinked from dotfiles/greetd/sessions) as the first session dir,
+# so we can override or add sessions easily.
+command = "start-hyprland -- -c /etc/greetd/hyprland-gtkgreet.conf"
+user = "rastsislau"
