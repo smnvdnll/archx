@@ -18,7 +18,9 @@ names = [
     "networkmanager",
     "yazi",
     "swayimg",
-    "bat"
+    "bat",
+    "eza",
+    "ripgrep-all"
 ]
 
 [[symlink]]
