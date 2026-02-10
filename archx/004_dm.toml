@@ -1,20 +1,11 @@
-# ========== Install Display Manager (greetd) ==========
+# ========== Install Display Manager (SDDM) ==========
 # Display Manager is responsible for displaying the desktop environment.
-# I use greetd + regreet for a minimal display manager.
 
 version = 1
-description = "Display manager (greetd)"
+description = "Display manager (SDDM)"
 
 [[packages]]
-names = ["greetd", "greetd-gtkgreet"]
-
-[[symlink]]
-source = "dotfiles/greetd"
-target = "/etc/greetd"
-
-[[symlink]]
-source = "dotfiles/archx/wallpaper"
-target = "/etc/archx/greeter/wallpaper"
+names = ["sddm"]
 
 [[service]]
-name = "greetd.service"
+name = "sddm.service"

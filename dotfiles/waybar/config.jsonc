@@ -1,114 +1,154 @@
+// -*- mode: jsonc -*-
 {
-    "modules-left": ["hyprland/workspaces"],
-    "modules-center": ["clock"],
-    "modules-right": ["power-profiles-daemon", "network", "bluetooth", "pulseaudio", "hyprland/language", "temperature", "backlight", "battery", "tray", "custom/power"],
+    "reload_style_on_change": true,
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    "height": 32, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 4, // Gaps between modules (4px)
 
-    "temperature": {
-        "format": "  {temperatureC}°C "
-    },
+    // Choose the order of the modules
+    "modules-left": [
+        "hyprland/workspaces",
+        "custom/media"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "hyprland/language",
+        "backlight",
+        "pulseaudio",
+        "group/hardware",
+        "network",
+        "battery",
+        "tray"
+    ],
 
-    "backlight": {
-        "format": " {icon} {percent}% ",
-        "format-icons": [""]
-    },
+    // ===== modules-left =====
 
-    "battery": {
-        // "bat": "BAT2",
+    // hyprland/workspaces
+    // (можно добавить настройки сюда, если надо)
+
+    "custom/media": {
+        "format": "\uec1b  {}",
+        "escape": true,
         "interval": 5,
-        "states": {
-            "warning": 30,
-            "critical": 15
-        },
-        "events": {
-            //"on-discharging-warning": "notify-send -u normal 'Low Battery'",
-            //"on-discharging-critical": "notify-send -u critical 'Very Low Battery'",
-            //"on-charging-100": "notify-send -u normal 'Battery Full!'"
-        },
-        "format": "{icon} {capacity}%",
-        "format-icons": ["", "", "", "", ""],
-        "max-length": 25
+        "tooltip": false,
+        "exec": "playerctl metadata --format='{{ title }}'",
+        "on-click": "playerctl play-pause",
+        "max-length": 30
     },
 
-    "power-profiles-daemon": {
-        "format": "{icon}",
-        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
-        "tooltip": true,
-        "format-icons": {
-            "default": "",
-            "performance": "",
-            "balanced": "",
-            "power-saver": ""
-        }
+    // ===== modules-center =====
+
+    "clock": {
+        "timezone": "Europe/Minsk",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "\udb80\udced  {:%d/%m/%Y}",
+        "format": "\uf017   {:%H:%M:%S | %b %d, %Y (%a)}"
     },
 
-    "bluetooth": {
-        "format": "  ",
-        "format-off": "  Off ",
-        "format-on": "  On ",
-        "format-connected": "  {num_connections} ",
-        "tooltip": true,
-        "tooltip-format": "Bluetooth settings",
-        "on-click": "vicinae vicinae://extensions/Gelei/bluetooth/devices"
-    },
+    // ===== modules-right =====
 
     "hyprland/language": {
         "format": "{}",
-        "format-en": "🇺🇸",
-        "format-ru": "🇷🇺",
-        "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next"
+        "format-en": "🇬🇧",
+        "format-ru": "🇷🇺"
     },
 
-    "network": {
-        // "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-wifi": "  {essid} ",
-        "format-ethernet": "{ifname} ",
-        "format-disconnected": "  ",
-        "max-length": 50,
-        "on-click": "vicinae vicinae://extensions/dagimg-dot/wifi-commander/scan-wifi"
+    "backlight": {
+        "format": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
     },
-
-    "idle_inhibitor": {
-        "format": "{icon}",
-        "format-icons": {
-            "activated": "",
-            "deactivated": ""
-        }
-    },
-
-    "tray": {
-        "icon-size": 15,
-        "spacing": 10
-    },
-
-    "clock": {
-        // "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        // "format-alt": "{:%Y-%m-%d}"
-        "format": "{:%H:%M:%S | %b %d, %Y (%a)}",
-        "interval": 1
-        // "on-click": "gnome-calendar"
-    },
-
+    
     "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-bluetooth": "{icon} {volume}%  {format_source}",
-        "format-bluetooth-muted": "{icon}   {format_source}",
-        "format-muted": "{icon} 0%",
+        // "scroll-step": 1, // %, can be a float
+        "format": "{volume}% {icon} {format_source}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
         "format-source": "{volume}% ",
-        "format-source-muted": "  ",
+        "format-source-muted": "",
         "format-icons": {
             "headphone": "",
-            "hands-free": "",
-            "headset": "",
+            "hands-free": "",
+            "headset": "",
             "phone": "",
             "portable": "",
             "car": "",
             "default": ["", "", ""]
         },
-        "on-click": "vicinae vicinae://extensions/rastsislaux/pulseaudio/pulseaudio"
+        "on-click": "pavucontrol"
+    },
+
+    "group/hardware": {
+        "orientation": "horizontal",
+        "modules": ["cpu", "memory"]
+    },
+
+    "cpu": {
+        "format": "{usage}% ",
+        "tooltip": false
+    },
+
+    "memory": {
+        "format": "{}% "
+    },
+
+    "network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "{ipaddr}/{cidr} ",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "Disconnected ⚠",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "on-click": "vicinae vicinae://extensions/dagimg-dot/wifi-commander/scan-wifi"
+    },
+
+    "battery": {
+        "interval": 3,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {power:.2f}W {icon}",
+        "format-full": "{capacity}% {icon}",
+        "format-charging": "{capacity}% {power:.2f}W ",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    },
+
+    // ===== unused modules (not in modules-...) =====
+    // Оставил в конце, чтобы порядок вызовов не ломать.
+
+    "temperature": {
+        // "thermal-zone": 2,
+        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 80,
+        // "format-critical": "{temperatureC}°C {icon}",
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", ""]
     },
 
     "custom/power": {
-        "format": "  ",
-        "on-click": "wlogout"
+        "format": "⏻ ",
+        "tooltip": false,
+        "menu": "on-click",
+        "menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
+        "menu-actions": {
+            "shutdown": "shutdown",
+            "reboot": "reboot",
+            "suspend": "systemctl suspend",
+            "hibernate": "systemctl hibernate"
+        }
     }
 }
+

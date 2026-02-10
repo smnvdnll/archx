@@ -8,13 +8,19 @@ description = "Apps"
 [[packages]]
 names = [
     "brightnessctl",
-    "chromium",
+    "firefox",
     "nano",
-    "lite-xl",
+    "neovim",
+    "fd",
+    "ripgrep",
+    "fzf",
     "kitty",
     "networkmanager",
     "yazi",
-    "swayimg"
+    "swayimg",
+    "bat",
+    "eza",
+    "ripgrep-all"
 ]
 
 [[symlink]]
@@ -22,7 +28,7 @@ source = "dotfiles/yazi"
 target = "~/.config/yazi"
 
 [[shell]]
-script = "xdg-settings set default-web-browser chromium.desktop"
+script = "xdg-settings set default-web-browser firefox.desktop"
 
 [[service]]
 name = "NetworkManager.service"

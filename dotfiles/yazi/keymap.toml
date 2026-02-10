@@ -9,3 +9,13 @@ on = "@"
 for = "unix"
 run = 'shell "nohup $@ >/dev/null 2>&1 &"'
 desc = "Run"
+
+[[mgr.prepend_keymap]]
+on = ["f", "d"]
+run = "plugin frank name"
+desc = "Live search by name with fd + fzf"
+
+[[mgr.prepend_keymap]]
+on = ["f", "r"]
+run = "plugin frank content"
+desc = "Live content search with ripgrep + fzf"

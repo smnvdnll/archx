@@ -1,0 +1,21 @@
+# ======== Install tlp ========
+
+version = 1
+description = "tlp"
+
+[[packages]]
+names = [
+  "tlp",
+  "tlp-pd"
+]
+
+[[symlink]]
+source = "dotfiles/tlp/tlp.conf"
+target = "/etc/tlp.conf"
+
+[[service]]
+name = "tlp.service"
+
+[[service]]
+name = "tlp-pd.service"
+
