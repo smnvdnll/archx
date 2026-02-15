@@ -46,7 +46,8 @@
         "timezone": "Europe/Minsk",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "\udb80\udced  {:%d/%m/%Y}",
-        "format": "\uf017   {:%H:%M:%S | %b %d, %Y (%a)}"
+        "format": "\uf017   {:%H:%M:%S | %b %d, %Y (%a)}",
+        "interval": 1
     },
 
     // ===== modules-right =====
@@ -79,7 +80,7 @@
             "car": "",
             "default": ["", "", ""]
         },
-        "on-click": "pavucontrol"
+        "on-click": "vicinae vicinae://extensions/rastsislaux/pulseaudio/pulseaudio"
     },
 
     "group/hardware": {
