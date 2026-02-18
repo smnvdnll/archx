@@ -117,7 +117,7 @@
         "format": "{capacity}% {power:.2f}W {icon}",
         "format-full": "{capacity}% {icon}",
         "format-charging": "{capacity}% {power:.2f}W ",
-        "format-plugged": "{capacity}% ",
+        "format-plugged": "{capacity}%  {power:.2f}W ",
         "format-alt": "{time} {icon}",
         "format-icons": ["", "", "", "", ""]
     },
